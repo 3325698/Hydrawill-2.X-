@@ -1,0 +1,8 @@
+Flask
+python-dotenv
+google-generativeai
+SpeechRecognition
+sounddevice
+soundfile
+gTTS
+playsound==1.2.2

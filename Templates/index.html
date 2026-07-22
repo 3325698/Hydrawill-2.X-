@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HydraWill 2.X</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <header>
+
+        <h1>HYDRAWILL 2.X</h1>
+
+        <p>AI Voice Assistant for Water Conservation</p>
+
+    </header>
+
+    <main class="dashboard">
+
+        <!-- LEFT PANEL -->
+
+        <aside class="left-panel">
+
+            <section class="robot-card">
+
+                <img
+                    src="{{ url_for('static', filename='hydra.png') }}"
+                    alt="Hydra"
+                    class="robot"
+                >
+
+            </section>
+
+            <section class="fact-card">
+
+                <h2>💧 Hydro Fact</h2>
+
+                <p>
+
+                    A leaking tap can waste thousands of litres of water every year.
+
+                </p>
+
+            </section>
+
+        </aside>
+
+        <!-- RIGHT PANEL -->
+
+        <section class="right-panel">
+
+            <div class="conversation-card">
+
+                <div class="conversation-header">
+
+                    <h2>Conversation</h2>
+
+                </div>
+
+                <div
+                    class="conversation-box"
+                    id="conversationBox"
+                >
+
+                    {% if conversation %}
+
+                        {% for chat in conversation %}
+
+                            <div class="user-message">
+
+                                <h4>👤 Visitor</h4>
+
+                                <p>{{ chat.user }}</p>
+
+                            </div>
+
+                            <div class="bot-message">
+
+                                <h4>🤖 Hydra</h4>
+
+                                <div class="bot-text">
+                                    {{ chat.bot }}
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="welcome">
+
+                            <h2>👋 Welcome to HydraWill 2.X</h2>
+
+                            <p>
+
+                                Ask me anything!
+
+                                <br><br>
+
+                                I specialize in water conservation,
+
+                                but I can answer general knowledge questions too.
+
+                                <br><br>
+
+                                🎤 Press F1 (coming soon)
+
+                                <br>
+
+                                ⌨️ Or type below.
+
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <form method="POST" id="chat-form">
+
+    <input
+        type="text"
+        id="question"
+        name="question"
+        placeholder="Ask Hydra..."
+        autocomplete="off"
+    >
+
+    <button
+        type="button"
+        id="mic-btn"
+        title="Voice Input"
+    >
+        🎙
+    </button>
+
+    <button type="submit">
+        Send
+    </button>
+
+</form>
+
+                <div class="status-strip">
+
+    <span class="online">● Online</span>
+
+    <span class="online">● Connected</span>
+
+    <span class="online">● Ready</span>
+
+    <span class="online">● Active</span>
+
+</div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+
+const box = document.getElementById("conversationBox");
+
+box.scrollTop = box.scrollHeight;
+
+</script> 
+
+<script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

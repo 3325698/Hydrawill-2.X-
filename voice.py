@@ -1,4 +1,9 @@
-import sounddevice as sd
+try:
+    import sounddevice as sd
+    AUDIO_AVAILABLE = True
+except Exception:
+    AUDIO_AVAILABLE = False
+
 import soundfile as sf
 import numpy as np
 import time
@@ -13,6 +18,10 @@ from config import (
 
 
 def record():
+
+    if not AUDIO_AVAILABLE:
+        print("⚠️ Microphone unavailable on this server.")
+        return None
 
     print("🎙 Listening...")
 
@@ -33,12 +42,11 @@ def record():
         if volume < 0.01:
 
             if silence_start is None:
-
                 silence_start = time.time()
 
         else:
-
             silence_start = None
+
 
     with sd.InputStream(
         samplerate=SAMPLE_RATE,
@@ -63,6 +71,12 @@ def record():
 
             time.sleep(0.1)
 
+
+    if len(recording) == 0:
+        print("❌ No audio recorded.")
+        return None
+
+
     audio = np.concatenate(recording)
 
     sf.write(
@@ -72,3 +86,5 @@ def record():
     )
 
     print("✅ Recording saved.")
+
+    return AUDIO_FILE

@@ -7,8 +7,6 @@ const SpeechRecognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
-let firstLoad = true; 
-
 if(!SpeechRecognition){
 
     alert("Speech Recognition is not supported in this browser.");
@@ -48,7 +46,7 @@ else{
     recognition.onend = function(){
 
         mic.classList.remove("listening");
-
+        robot.classList.remove("listening");
     };
 
 }
@@ -131,13 +129,9 @@ const observer = new MutationObserver(function(){
 
     const latest = bots[bots.length-1];
 
-    if(firstLoad){
+    if(latest.dataset.spoken==="true") return;
 
-    firstLoad = false;
-
-    return;
-
-    }
+    latest.dataset.spoken="true";
 
     speak(latest.innerText);
 
@@ -146,4 +140,4 @@ const observer = new MutationObserver(function(){
 observer.observe(document.body,{
     childList:true,
     subtree:true
-}); 
+});

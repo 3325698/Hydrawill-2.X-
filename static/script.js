@@ -7,6 +7,8 @@ const SpeechRecognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
+let firstLoad = true; 
+
 if(!SpeechRecognition){
 
     alert("Speech Recognition is not supported in this browser.");
@@ -69,9 +71,25 @@ document.addEventListener("keydown",function(event){
 
     }
 
+    else if(event.code==="Space"){
+
+    event.preventDefault();
+
+    stopSpeaking();
+
+    }
+
 });
 
 // ---------- Browser Speech ----------
+function stopSpeaking(){
+
+    speechSynthesis.cancel();
+
+    robot.classList.remove("speaking");
+
+}
+
 function speak(text){
 
     speechSynthesis.cancel();
@@ -112,6 +130,14 @@ const observer = new MutationObserver(function(){
     if(bots.length===0) return;
 
     const latest = bots[bots.length-1];
+
+    if(firstLoad){
+
+    firstLoad = false;
+
+    return;
+
+    }
 
     speak(latest.innerText);
 

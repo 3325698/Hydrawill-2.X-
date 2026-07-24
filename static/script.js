@@ -1,3 +1,4 @@
+const robot = document.querySelector(".robot");
 const mic = document.getElementById("mic-btn");
 const input = document.getElementById("question");
 const form = document.getElementById("chat-form");
@@ -23,7 +24,7 @@ else{
     mic.onclick = function(){
 
         mic.classList.add("listening");
-
+        robot.classList.add("listening"); 
         recognition.start();
 
     };
@@ -33,6 +34,9 @@ else{
         const text = event.results[0][0].transcript;
 
         input.value = text;
+        
+        robot.classList.remove("listening");
+        robot.classList.add("thinking");
 
         speechSynthesis.cancel();
         form.submit();
@@ -71,7 +75,8 @@ document.addEventListener("keydown",function(event){
 function speak(text){
 
     speechSynthesis.cancel();
-
+    robot.classList.remove("thinking");
+    robot.classList.add("speaking");  
     const msg = new SpeechSynthesisUtterance(text);
 
     msg.lang = "en-US";
@@ -92,6 +97,11 @@ function speak(text){
     }
 
     speechSynthesis.speak(msg);
+    msg.onend=function(){
+
+    robot.classList.remove("speaking");
+
+};
 
 }
 

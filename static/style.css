@@ -159,16 +159,18 @@ header p{
 .robot{
 
     width:100%;
-
     height:100%;
-
     max-height:560px;
 
     object-fit:contain;
 
     animation:float 4s ease-in-out infinite;
 
-    filter:drop-shadow(0 0 30px rgba(66,165,245,.45));
+    filter:
+        drop-shadow(0 0 20px rgba(66,165,245,.4))
+        drop-shadow(0 0 45px rgba(66,165,245,.35));
+
+    transition:all .35s ease;
 
 }
 
@@ -483,31 +485,6 @@ button:hover{
 
 }
 
-/* ===========================
-   ANIMATION
-=========================== */
-
-@keyframes float{
-
-    0%{
-
-        transform:translateY(0px);
-
-    }
-
-    50%{
-
-        transform:translateY(-10px);
-
-    }
-
-    100%{
-
-        transform:translateY(0px);
-
-    }
-
-}
 
 /* ===========================
    MOBILE
@@ -680,6 +657,114 @@ button:hover{
     100%{
 
         transform:scale(1);
+
+    }
+
+}
+
+/* ---------------- FLOAT ---------------- */
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* ---------------- LISTENING ---------------- */
+
+.robot.listening{
+
+    animation:
+        float 4s ease-in-out infinite,
+        listeningGlow .8s infinite alternate;
+
+}
+
+@keyframes listeningGlow{
+
+    from{
+
+        filter:
+        drop-shadow(0 0 15px #42a5f5)
+        drop-shadow(0 0 30px #42a5f5);
+
+    }
+
+    to{
+
+        filter:
+        drop-shadow(0 0 35px #00e5ff)
+        drop-shadow(0 0 70px #00e5ff);
+
+    }
+
+}
+
+/* ---------------- THINKING ---------------- */
+
+.robot.thinking{
+
+    animation:
+        float 4s ease-in-out infinite,
+        thinkingGlow 1.2s linear infinite;
+
+}
+
+@keyframes thinkingGlow{
+
+    0%{
+
+        filter:
+        hue-rotate(0deg)
+        drop-shadow(0 0 18px #42a5f5);
+
+    }
+
+    100%{
+
+        filter:
+        hue-rotate(360deg)
+        drop-shadow(0 0 40px #42a5f5);
+
+    }
+
+}
+
+/* ---------------- SPEAKING ---------------- */
+
+.robot.speaking{
+
+    animation:
+        float 4s ease-in-out infinite,
+        speakingPulse .45s infinite alternate;
+
+}
+
+@keyframes speakingPulse{
+
+    from{
+
+        transform:
+        translateY(0px)
+        scale(1);
+
+    }
+
+    to{
+
+        transform:
+        translateY(-6px)
+        scale(1.03);
 
     }
 

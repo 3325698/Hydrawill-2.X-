@@ -2,23 +2,57 @@ const mic = document.getElementById("mic-btn");
 const input = document.getElementById("question");
 const form = document.getElementById("chat-form");
 
-mic.onclick = function () {
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
 
-    input.value = "__VOICE__";
+if(!SpeechRecognition){
 
-    form.submit();
+    alert("Speech Recognition is not supported in this browser.");
 
-};
+}
 
-document.addEventListener("keydown", function(event){
+else{
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.continuous = false;
+
+    mic.onclick = function(){
+
+        mic.classList.add("listening");
+
+        recognition.start();
+
+    };
+
+    recognition.onresult = function(event){
+
+        const text = event.results[0][0].transcript;
+
+        input.value = text;
+
+        form.submit();
+
+    };
+
+    recognition.onend = function(){
+
+        mic.classList.remove("listening");
+
+    };
+
+}
+
+document.addEventListener("keydown",function(event){
 
     if(event.key==="F1"){
 
         event.preventDefault();
 
-        input.value="__VOICE__";
-
-        form.submit();
+        mic.click();
 
     }
 

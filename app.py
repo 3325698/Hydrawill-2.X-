@@ -36,7 +36,7 @@ def home():
             raw_answer = ask(question)
 
             #Speak the answer 
-            speak(raw_answer)
+            #speak(raw_answer)
 
             answer = Markup(
                 markdown.markdown(raw_answer)

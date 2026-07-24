@@ -34,6 +34,7 @@ else{
 
         input.value = text;
 
+        speechSynthesis.cancel();
         form.submit();
 
     };
@@ -65,3 +66,48 @@ document.addEventListener("keydown",function(event){
     }
 
 });
+
+// ---------- Browser Speech ----------
+function speak(text){
+
+    speechSynthesis.cancel();
+
+    const msg = new SpeechSynthesisUtterance(text);
+
+    msg.lang = "en-US";
+
+    msg.rate = 1;
+
+    msg.pitch = 1;
+
+    const voices = speechSynthesis.getVoices();
+
+    const female = voices.find(v =>
+        v.lang.startsWith("en") &&
+        v.name.toLowerCase().includes("female")
+    );
+
+    if(female){
+        msg.voice = female;
+    }
+
+    speechSynthesis.speak(msg);
+
+}
+
+const observer = new MutationObserver(function(){
+
+    const bots = document.querySelectorAll(".bot-text");
+
+    if(bots.length===0) return;
+
+    const latest = bots[bots.length-1];
+
+    speak(latest.innerText);
+
+});
+
+observer.observe(document.body,{
+    childList:true,
+    subtree:true
+}); 
